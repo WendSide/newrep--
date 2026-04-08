@@ -1,8 +1,8 @@
 <?php
-
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
+header('Content-Type: application/json');
 
 // подключение к базе данных
 $host = 'localhost'; 
@@ -22,16 +22,20 @@ $options = [
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-    die("Ошибка подключения: " . $e->getMessage());
+    die(json_encode(['error' => 'Ошибка подключения: ' . $e->getMessage()]));
 }
 
-// выбор всех машин из таблицы
-$stmt = $pdo->query("SELECT * FROM carpost"); // Вывод полной таблицы carpost
+// Явно указываем все поля, включая photo
+$stmt = $pdo->query("SELECT id, mark, model, `release`, price, mileage, ecapacity, transmission, `condition`, numberowners, description, sity, numberphone, owner, photo FROM carpost");
 
-// получение данных
 $cars = $stmt->fetchAll();
 
-// вывод в формате JSON
-header('Content-Type: application/json');
+// Преобразуем photo в строку, если вдруг пришло что-то другое
+foreach ($cars as &$car) {
+    if (!isset($car['photo']) || $car['photo'] === null) {
+        $car['photo'] = '';
+    }
+}
+
 echo json_encode($cars);
 ?>

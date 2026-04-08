@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try {
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($_GET)) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $host = 'localhost';
         $db = 'projectbaseautosell';
@@ -23,20 +23,39 @@ try {
         $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        // Получаем данные
-        $mark = $_GET['mark'] ?? '';
-        $model = $_GET['model'] ?? '';
-        $release = $_GET['release'] ?? null;
-        $price = $_GET['price'] ?? null;
-        $mileage = $_GET['mileage'] ?? null;
-        $ecapacity = $_GET['ecapacity'] ?? null;
-        $transmission = $_GET['transmission'] ?? null;
-        $condition = $_GET['condition'] ?? '';
-        $numberowners = $_GET['numberowners'] ?? null;
-        $description = $_GET['description'] ?? '';
-        $sity = $_GET['sity'] ?? '';
-        $numberphone = $_GET['numberphone'] ?? '';
-        $owner = $_GET['owner'] ?? '';
+        // Получаем данные из POST
+        $mark = $_POST['mark'] ?? '';
+        $model = $_POST['model'] ?? '';
+        $release = $_POST['release'] ?? null;
+        $price = $_POST['price'] ?? null;
+        $mileage = $_POST['mileage'] ?? null;
+        $ecapacity = $_POST['ecapacity'] ?? null;
+        $transmission = $_POST['transmission'] ?? null;
+        $condition = $_POST['condition'] ?? '';
+        $numberowners = $_POST['numberowners'] ?? null;
+        $description = $_POST['description'] ?? '';
+        $sity = $_POST['sity'] ?? '';
+        $numberphone = $_POST['numberphone'] ?? '';
+        $owner = $_POST['owner'] ?? '';
+        
+        // Обработка фото
+        $photo_path = null;
+        if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+            $upload_dir = 'uploads/';
+            // Создаём папку если нет
+            if (!file_exists($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+            
+            $ext = strtolower(pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION));
+            $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+            
+            if (in_array($ext, $allowed)) {
+                $filename = time() . '_' . rand(1000, 9999) . '.' . $ext;
+                $photo_path = $upload_dir . $filename;
+                move_uploaded_file($_FILES['photo']['tmp_name'], $photo_path);
+            }
+        }
         
         // Проверка обязательных полей
         if (empty($mark) || empty($model) || empty($release) || empty($price) || empty($condition) || empty($sity) || empty($numberphone) || empty($owner)) {
@@ -45,9 +64,9 @@ try {
             exit();
         }
         
-        // Вставляем в таблицу carpost с обратными кавычками для зарезервированных слов
-        $sql = "INSERT INTO carpost (mark, model, `release`, price, mileage, ecapacity, transmission, `condition`, numberowners, description, sity, numberphone, owner) 
-                VALUES (:mark, :model, :release, :price, :mileage, :ecapacity, :transmission, :condition, :numberowners, :description, :sity, :numberphone, :owner)";
+        // Вставляем в таблицу carpost
+        $sql = "INSERT INTO carpost (mark, model, `release`, price, mileage, ecapacity, transmission, `condition`, numberowners, description, sity, numberphone, owner, photo) 
+                VALUES (:mark, :model, :release, :price, :mileage, :ecapacity, :transmission, :condition, :numberowners, :description, :sity, :numberphone, :owner, :photo)";
         
         $stmt = $pdo->prepare($sql);
         
@@ -64,6 +83,7 @@ try {
         $stmt->bindParam(':sity', $sity);
         $stmt->bindParam(':numberphone', $numberphone);
         $stmt->bindParam(':owner', $owner);
+        $stmt->bindParam(':photo', $photo_path);
         
         $stmt->execute();
         
