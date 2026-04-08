@@ -39,3 +39,5 @@ foreach ($cars as &$car) {
 
 echo json_encode($cars);
 ?>
+
+// ALTER TABLE `carpost` ADD `photo` TEXT NULL AFTER `owner`;
