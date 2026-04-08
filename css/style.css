@@ -1543,7 +1543,11 @@ textarea.form-input {
     }
 }
 
-
+/* Кликабельное лого */
+.logo a {
+    color: orange;
+    text-decoration: none;
+}
 
 
 /* ===== СЛАЙДЕР НА ГЛАВНОЙ ===== */
