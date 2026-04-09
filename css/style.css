@@ -1481,8 +1481,8 @@ textarea.form-input {
 }
 
 .modal-image {
-    max-width: 80%;
-    max-height: 80%;
+    max-width: 90%;
+    max-height: 90%;
     object-fit: contain;
     border-radius: 10px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
@@ -1613,34 +1613,6 @@ textarea.form-input {
     right: 20px;
 }
 
-.slider-dots {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 12px;
-    z-index: 10;
-}
-
-.dot {
-    width: 12px;
-    height: 12px;
-    background: rgba(255,255,255,0.5);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.need_block {
-    width: 202px;
-    height: 220px;
-}
-
-.dot.active {
-    background: orange;
-    transform: scale(1.2);
-}
 
 @media (max-width: 768px) {
     .slide {

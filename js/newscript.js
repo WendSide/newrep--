@@ -1,3 +1,5 @@
+// РЕГИСТРАЦИЯ
+
 async function fetchData(nickname, email, pass) {
     let url = `http://localhost/myserver/?nickname=${encodeURIComponent(nickname)}&email=${encodeURIComponent(email)}&pass=${encodeURIComponent(pass)}`
     
@@ -70,13 +72,3 @@ function get_data_form() {
 document.addEventListener('DOMContentLoaded', function () {
     get_data_form()
 })
-
-function openbox(box) {
-    // Исправленная функция openbox
-    let boxElement = document.getElementById('box');
-    if (boxElement.style.display === 'none' || boxElement.style.display === '') {
-        boxElement.style.display = "block";
-    } else {
-        boxElement.style.display = "none";
-    }
-}

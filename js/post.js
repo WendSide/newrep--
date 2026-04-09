@@ -1,3 +1,7 @@
+// JS ДЛЯ СОЗДАНИЯ ОБЪЯВЛЕИЙ
+
+
+
 async function sendCarData(formData) {
     let url = 'http://localhost/myserver/post.php';
     

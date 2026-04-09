@@ -7,7 +7,9 @@
 </head>
 <body>
     <div class="header">
-        <div class="logo">SOPHISTICATED MOTORS</div>
+        <div class="logo">
+            <a href="header.html">SOPHISTICATED MOTORS</a>
+        </div>
         <div class="menu">
             <a href="header.html">Каталог</a>
             <a href="love.html" class="active">Избранное</a>
@@ -16,14 +18,37 @@
         </div>
     </div>
 
-    <div class="main">
-        <div class="cars" id="favouritesContainer"></div>
-    </div>
 
+    <div class="main">
+        <div class="cars" id="carsContainer">
+            <div class="car-item">
+                <div class="car-image">
+                    <img src="http://localhost/myserver/uploads/1775724389_1202.jpg" alt="VAZ 2114" class="car-img" data-photo-url="http://localhost/myserver/uploads/1775724389_1202.jpg">
+                </div>
+                <div class="car-info">
+                    <h2 class="car-name">VAZ 2114</h2>
+                    <div class="car-price">105000 ₽</div>
+                    <div class="car-specs">
+                        <div><span class="spec-label">Год:</span> <span class="spec-value">2006</span></div>
+                        <div><span class="spec-label">Пробег:</span> <span class="spec-value">54000 км</span></div>
+                        <div><span class="spec-label">Мощность:</span> <span class="spec-value">1.6 л.с.</span></div>
+                        <div><span class="spec-label">Коробка:</span> <span class="spec-value">Механическая</span></div>
+                        <div><span class="spec-label">Состояние:</span> <span class="spec-value">Среднее</span></div>
+                        <div><span class="spec-label">Владельцев:</span> <span class="spec-value">3</span></div>
+                    </div>
+                    <div class="car-description">Не бит не крашен, ни одной детали не крутилось</div>
+                </div>
+                <div class="seller-info">
+                    👤 Иван | 📞 2147483647
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="footer">
         <p>© 2026 Sophisticated Motors. Все права защищены.</p>
     </div>
 
-    <script src="js/favourites.js"></script>
+    <script src="js/carpos.js"></script>
 </body>
 </html>
